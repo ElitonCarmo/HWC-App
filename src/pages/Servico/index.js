@@ -10,6 +10,8 @@ import Banner from '../../components/Banner';
 import api from '../../services/api';
 import { toast } from 'react-toastify';
 
+//import { getToken } from '../../services/auth';
+//const token = getToken();
 const apiService = '/servico';
 
 class Servico extends Component {
@@ -51,6 +53,11 @@ class Servico extends Component {
 
     /* ===== Api ===== */
     async listAll() {
+        
+        
+        //api.defaults.headers.Authorization = `Bearer ${token}`;
+       
+
         const result = await api.get(apiService);
         const list = result.data || [];
         this.setState({ list });
@@ -81,6 +88,8 @@ class Servico extends Component {
             let response = null;
             let sucesso = false;
 
+
+            
             if (obj.id === 0)
                 await api.post(apiService, obj).then(response => {
                     sucesso = true;

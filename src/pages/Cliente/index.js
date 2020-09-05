@@ -61,7 +61,6 @@ class Cliente extends Component {
     async listAll() {
 
         const token = getToken();
-
         api.defaults.headers.Authorization = `Bearer ${token}`;
         const result = await api.get(apiService);
 

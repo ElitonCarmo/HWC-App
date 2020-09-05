@@ -11,7 +11,13 @@ class Inicio extends Component {
         processos: [],
         status: [],
         totalImportadores: 0,
-        totalExportadores: 0
+        totalExportadores: 0,
+
+        processosEmAndamento:0,
+        processosFinalizados:0,
+
+        statusLançados:0,
+        statusVisualizados:0
     }
 
     componentDidMount() {
@@ -28,13 +34,13 @@ class Inicio extends Component {
     async listProcessos() {
         const result = await api.get('/processo');
         const list = result.data || [];
-        this.setState({ processos: list });
+        this.setState({ processos: list, processosEmAndamento: list.length });
     }
 
     async listStatus() {
         const result = await api.get('/processostatus/getUltimosStatusDoProcesso');
         const list = result.data || [];
-        this.setState({ status: list });
+        this.setState({ status: list, statusLançados: list.length });
     }
 
     async listClientes() {
@@ -57,7 +63,16 @@ class Inicio extends Component {
 
     render() {
 
-        const { processos, status, totalImportadores, totalExportadores } = this.state;
+        const { 
+            processos, 
+            status, 
+            totalImportadores, 
+            totalExportadores,    
+            processosEmAndamento,
+            processosFinalizados,
+            statusLançados,
+            statusVisualizados } = this.state;
+
         return (
             <>
                 <ScreenComponent>
@@ -67,11 +82,11 @@ class Inicio extends Component {
                             <h2>Processos</h2>
                             <Row justifyContent="space-between">
                                 <span>Em andamento</span>
-                                <h3>27</h3>
+                                <h3>{processosEmAndamento}</h3>
                             </Row>
                             <Row justifyContent="space-between">
                                 <span>Finalizados</span>
-                                <h3>52</h3>
+                                <h3>{processosFinalizados}</h3>
                             </Row>
 
                         </Column>
@@ -92,11 +107,11 @@ class Inicio extends Component {
                             <h2>Status</h2>
                             <Row justifyContent="space-between">
                                 <span>Lançados</span>
-                                <h3>176</h3>
+                                <h3>{statusLançados}</h3>
                             </Row>
                             <Row justifyContent="space-between">
                                 <span>Visualizados</span>
-                                <h3>84</h3>
+                                <h3>{statusVisualizados}</h3>
                             </Row>
                         </Column>
 
@@ -127,6 +142,7 @@ class Inicio extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        
                                         {
                                             status.map(l => (
                                                 <tr key={l.id}>

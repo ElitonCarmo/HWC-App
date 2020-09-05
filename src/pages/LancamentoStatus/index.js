@@ -82,8 +82,7 @@ class LancamentoStatus extends Component {
     }
 
     handleSave = async () => {
-        console.log(this.state.status);
-
+       
         if (this.validations()) {
             let { status } = this.state;
 
@@ -154,6 +153,7 @@ class LancamentoStatus extends Component {
                             value={status.processo_servico_id}
                             onChange={(e) => { this.setState({ status: { ...status, processo_servico_id: e.target.value } }) }}
                         >
+                            <option value="-1">{'Selecione o Serviço'}</option>
                             {
                                 processo.processoServico.filter(ps => ps.numero_registro !== "").map(ps => {
                                     return (<option value={ps.idProcessoServico}>{ps.nome_servico} - {ps.numero_registro}</option>)

@@ -264,9 +264,6 @@ class Processo extends Component {
         }
         else
             toast.error('Não foi encontrado nenhum serviço vinculado a esse Processo');
-
-
-
     }
 
     handleDelete = id => {

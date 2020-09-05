@@ -10,7 +10,6 @@ export const isAuthenticated = (screen) => {
     if (localStorage.getItem(TOKEN_KEY) !== null) 
         authenticated = havePermission(screen)
     
-    
     return authenticated;
 }
 

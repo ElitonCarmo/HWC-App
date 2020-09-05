@@ -18,7 +18,7 @@ class NavLeft extends Component {
 
     async componentDidMount() {
         const user = JSON.parse(getUserToken());
-        
+    
         if (user.logo_path != null) 
             user.logo_path = `http://localhost:3333/files/${user.logo_path}`;
         else

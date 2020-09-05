@@ -2,11 +2,17 @@ import { getUserToken } from './auth';
 
 export const havePermission = (screen) => {
 
+    if(screen == 'ProcessoCliente')
+        debugger;
+        
     let user = JSON.parse(getUserToken());
     let permission = false;
 
-    if (user.flag == 'cliente' && screen == 'ProcessoCliente')
-        permission = true;
+    if(screen == 'ProcessoCliente')
+    {
+        if (user.flag == 'cliente')
+            permission = true;
+    }    
     else {
         if (user.flag == 'colaborador') {
             permission = true;
