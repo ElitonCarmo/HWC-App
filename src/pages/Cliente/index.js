@@ -60,8 +60,8 @@ class Cliente extends Component {
     /* ===== Api ===== */
     async listAll() {
 
-        const token = getToken();
-        api.defaults.headers.Authorization = `Bearer ${token}`;
+        //const token = getToken();
+        //api.defaults.headers.Authorization = `Bearer ${token}`;
         const result = await api.get(apiService);
 
         /*        
@@ -184,29 +184,28 @@ class Cliente extends Component {
         let errorDescriptions = '';
 
         if (obj.nome == '')
-            errorDescriptions = `Preencha o campo Nome \n `;
+            errorDescriptions = `Preencha o campo Nome, `;
 
         if (obj.cpf_cnpj == '')
-            errorDescriptions += "Preencha o campo CPF ou CNPJ \n";
+            errorDescriptions += "Preencha o campo CPF ou CNPJ, ";
 
         if (obj.email == '')
-            errorDescriptions += "Preencha o campo Email\n";
+            errorDescriptions += "Preencha o campo Email, ";
 
         if (obj.alterarSenha) {
             if (obj.senha == '')
-                errorDescriptions += "Preencha o campo Senha";
+                errorDescriptions += "Preencha o campo Senha, ";
             else {
                 if (obj.senha != obj.confirmarSenha)
-                    errorDescriptions += "As senhas informadas não conferem";
+                    errorDescriptions += "As senhas informadas não conferem, ";
             }
         }
-
-
 
         if (errorDescriptions == '')
             return true;
         else {
-            toast.error(errorDescriptions);
+            toast.enableHtml = 
+            toast.error(errorDescriptions,{enableHtml: true});
             return false;
         }
 
@@ -227,6 +226,28 @@ class Cliente extends Component {
 
     getImage(url) {
         this.setState({ obj: { ...this.state.obj, imagem: `http://localhost:3333/files/${url}` } });
+    }
+
+
+    
+    async removeImg(obj){
+        
+        let sucesso = false;
+        
+        await api.put(`${apiService}/putRemoveImagemCliente/${obj.id}`, JSON.stringify(obj), {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        }).then(response => {
+            sucesso = true;
+        }).catch(error => {
+            sucesso = false;
+        });
+
+        if (sucesso) {
+            this.setState({ obj: { ...obj, imagem: null } });
+            toast.success('Imagem removida com Sucesso');
+        }
+        else
+            toast.error('Não foi possivel remover essa Imagem');
     }
     /* =====  Render ===== */
 
@@ -352,7 +373,7 @@ class Cliente extends Component {
                                 (
                                     <>
                                         <ImagemPerfilUpload src={obj.imagem} />
-                                        <Button background="white" color="#8b8d90" hBg="#dc3545" hC="white" onClick={() => { this.setState({ obj: { ...obj, imagem: null } }) }}>Remover Imagem</Button>
+                                        <Button background="white" color="#8b8d90" hBg="#dc3545" hC="white" onClick={() => { this.removeImg(obj) }}>Remover Imagem</Button>
                                     </>
                                 ) :
                                 ('')

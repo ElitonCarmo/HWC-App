@@ -10,20 +10,27 @@ class NavLeft extends Component {
     state = {
         currentPage: 'inicio',
         user: {
-            nome: '', flag: '', tipo: '', imagem: ''
+            nome: '', flag: '', tipo: '', imagem: '', descricaoSubTitulo: ''
         },
     }
-
-
 
     async componentDidMount() {
         const user = JSON.parse(getUserToken());
     
+        console.log('Olá :)');
+        console.log(user);
+
         if (user.logo_path != null) 
             user.logo_path = `http://localhost:3333/files/${user.logo_path}`;
         else
             user.logo_path = 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png';
 
+
+        if(user.flag == 'colaborador')
+            user.descricaoSubTitulo = user.tipo;
+        else
+            user.descricaoSubTitulo = 'Cliente'; 
+            
         await this.setState({ user });      
     }
 
@@ -81,8 +88,8 @@ class NavLeft extends Component {
                         <div class="user">
                             <img src={user.logo_path} alt="Perfil" />
                             <div class="infoUser">
-                                <h1>{user.nome}</h1>
-                                <span>CEO</span>
+                                <h1 title={user.email}>{user.nome}</h1>
+                                <span>{user.descricaoSubTitulo}</span>
                             </div>
                         </div>
 

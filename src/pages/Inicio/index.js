@@ -14,10 +14,10 @@ class Inicio extends Component {
         totalExportadores: 0,
 
         processosEmAndamento:0,
-        processosFinalizados:0,
+        processosFinalizados:'-',
 
         statusLançados:0,
-        statusVisualizados:0
+        statusVisualizados:'-'
     }
 
     componentDidMount() {

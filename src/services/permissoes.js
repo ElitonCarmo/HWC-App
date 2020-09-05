@@ -2,9 +2,6 @@ import { getUserToken } from './auth';
 
 export const havePermission = (screen) => {
 
-    if(screen == 'ProcessoCliente')
-        debugger;
-        
     let user = JSON.parse(getUserToken());
     let permission = false;
 

@@ -26,7 +26,8 @@ class LancamentoStatus extends Component {
             created_at: '',
             updated_at: '',
         },
-        list: []
+        list: [],
+        loadingButton:false
     }
 
     componentDidMount() {
@@ -42,8 +43,6 @@ class LancamentoStatus extends Component {
         const result = await api.get(`/processostatus/getStatusDoProcesso?idProcesso=${id}`);
         const list = result.data || [];
         this.setState({ list });
-        console.log(list);
-
     }
 
     /* ===== Clean Objects ===== */
@@ -83,6 +82,7 @@ class LancamentoStatus extends Component {
 
     handleSave = async () => {
        
+        this.setState({loadingButton:true});
         if (this.validations()) {
             let { status } = this.state;
 
@@ -110,8 +110,10 @@ class LancamentoStatus extends Component {
             }
             else
                 toast.error('Não foi possivel salvar o Serviço');
-        }
 
+                
+        }
+        this.setState({loadingButton:false});
     }
 
 
@@ -128,7 +130,7 @@ class LancamentoStatus extends Component {
 
     renderAdicionar = e => {
 
-        const { status, processo } = this.state;
+        const { status, processo, loadingButton } = this.state;
 
         return (
             <>
@@ -192,7 +194,17 @@ class LancamentoStatus extends Component {
                 <Row>
                     <Column >
                         <Row>
-                            <ButtonSuccess onClick={() => this.handleSave()}>Salvar Status</ButtonSuccess>
+                            
+                            {
+                                loadingButton ?
+                                (<ButtonSuccess>Salvando Status</ButtonSuccess>):
+                                (<ButtonSuccess onClick={() => this.handleSave()}>Salvar Status</ButtonSuccess>) 
+                                
+                            }
+                            
+                            
+
+
                             <ButtonDefault onClick={() => this.setState({ showList: true })}>Cancelar</ButtonDefault>
                         </Row>
                     </Column>
@@ -205,7 +217,7 @@ class LancamentoStatus extends Component {
     renderList = e => {
 
         const { list } = this.state;
-
+        console.log(list);
         return (
             <>
                 <Row justifyContent="space-between">
@@ -247,7 +259,7 @@ class LancamentoStatus extends Component {
                                     (
                                         <tr key={l.id}>
 
-                                            <td>{l.processo_servico_id}</td>
+                                            <td>{l.processo_Servico.servico.nome_servico}</td>
                                             <td>{l.descricao_status}</td>
                                             <td>{new Date(l.updated_at).toLocaleString()}</td>
 

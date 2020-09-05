@@ -161,20 +161,20 @@ class Colaborador extends Component {
         let errorDescriptions = '';
 
         if (obj.nome == '')
-            errorDescriptions = `Preencha o campo Nome \n`;
+            errorDescriptions = `Preencha o campo Nome, `;
 
         if (obj.cpf_cnpj == '')
-            errorDescriptions += "Preencha o campo CPF ou CNPJ \n";
+            errorDescriptions += "Preencha o campo CPF ou CNPJ, ";
 
         if (obj.email == '')
-            errorDescriptions += "Preencha o campo Email";
+            errorDescriptions += "Preencha o campo Email, ";
 
         if (obj.alterarSenha) {
             if (obj.senha == '')
-                errorDescriptions += "Preencha o campo Senha";
+                errorDescriptions += "Preencha o campo Senha, ";
             else {
                 if (obj.senha != obj.confirmarSenha)
-                    errorDescriptions += "As senhas informadas não conferem";
+                    errorDescriptions += "As senhas informadas não conferem, ";
             }
         }
 
@@ -188,6 +188,26 @@ class Colaborador extends Component {
 
     }
 
+    async removeImg(obj){
+        
+        let sucesso = false;
+        
+        await api.put(`${apiService}/putRemoveImagemColaborador/${obj.id}`, JSON.stringify(obj), {
+            headers: { 'Content-Type': 'multipart/form-data' }
+        }).then(response => {
+            sucesso = true;
+        }).catch(error => {
+            sucesso = false;
+        });
+
+        if (sucesso) {
+            this.setState({ obj: { ...obj, imagem: null } });
+            toast.success('Imagem removida com Sucesso');
+        }
+        else
+            toast.error('Não foi possivel remover essa Imagem');
+    }
+    
     /* ===== Image ===== */
     changeImage = e => {
         if (e.target.files && e.target.files[0]) {
@@ -319,7 +339,7 @@ class Colaborador extends Component {
                                 (
                                     <>
                                         <ImagemPerfilUpload src={obj.imagem} />
-                                        <Button background="white" color="#8b8d90" hBg="#dc3545" hC="white" onClick={() => { this.setState({ obj: { ...obj, imagem: null } }) }}>Remover Imagem</Button>
+                                        <Button background="white" color="#8b8d90" hBg="#dc3545" hC="white" onClick={() => { this.removeImg(obj) }}>Remover Imagem</Button>
                                     </>
                                 ) :
                                 ('')
