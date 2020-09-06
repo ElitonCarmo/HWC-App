@@ -9,6 +9,7 @@ import Cliente from './pages/Cliente';
 import Processo from './pages/Processo';
 import ProcessoCliente from './pages/ProcessoCliente';
 import EmpresaEstrangeira from './pages/EmpresaEstrangeira';
+import PerfilUsuario from './pages/PerfilUsuario';
 
 import { isAuthenticated } from './services/auth';
 import Header from './components/Header';
@@ -119,6 +120,12 @@ const Routes = () => (
       </Wrapper>
     </Route>
 
+
+    <Route path="/perfilUsuario" component={Wrapper}>
+      <Wrapper>
+        <PerfilUsuario />
+      </Wrapper>
+    </Route>
   </Switch>
 )
 

@@ -55,6 +55,8 @@ class Cliente extends Component {
     componentDidMount() {
 
         this.listAll();
+
+        
     }
 
     /* ===== Api ===== */

@@ -403,11 +403,24 @@ class Processo extends Component {
         );
     }
 
-    atualizaServicoProcesso = (id, valor, tipo) => {
+     atualizaServicoProcesso = async (id, valor, tipo) => {
 
         let { processoServico } = this.state.obj;
         let index = processoServico.findIndex(x => x.id == id);
         processoServico[index][tipo] = valor;
+     
+        if(tipo == 'ativo')
+        {
+           
+            console.log('ativo');
+            let resultado = await api.get(`/processoservico/getTotalServicos/${processoServico[index].id}`);
+            
+            console.log(processoServico[index].id);
+            console.log(index);
+            console.log(resultado.data);
+            processoServico[index].numero_registro = resultado.data.total;
+        }
+
         this.setState({
             obj: {
                 ...this.state.obj,
@@ -419,6 +432,7 @@ class Processo extends Component {
     renderServicos() {
 
         const { processoServico } = this.state.obj;
+
 
         return (
             <>

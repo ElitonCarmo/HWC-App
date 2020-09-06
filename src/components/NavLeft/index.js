@@ -15,25 +15,28 @@ class NavLeft extends Component {
     }
 
     async componentDidMount() {
+        this.configUser();   
+    }
+
+    async configUser(){
         const user = JSON.parse(getUserToken());
-    
-        console.log('Olá :)');
-        console.log(user);
 
-        if (user.logo_path != null) 
+        if (user.logo_path != null && user.logo_path != "") 
             user.logo_path = `http://localhost:3333/files/${user.logo_path}`;
-        else
+        else{
+        
+          
             user.logo_path = 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png';
-
+        
+        }
 
         if(user.flag == 'colaborador')
             user.descricaoSubTitulo = user.tipo;
         else
             user.descricaoSubTitulo = 'Cliente'; 
             
-        await this.setState({ user });      
+        this.setState({ user });
     }
-
 
    
     renderItem(screen, page, link, Icon) {
@@ -62,14 +65,8 @@ class NavLeft extends Component {
                 {this.renderItem('EmpresaEstrangeira', 'Empresa Estrangeira', '/empresaestrangeira', FaUser)}
                 {this.renderItem('Colaborador', 'Colaboradores', '/colaborador', FaUserCog)}
                 {this.renderItem('Servico', 'Serviços', '/servico', FaMap)}
-
+                {this.renderItem('PerfilUsuario', 'Configurações', '/perfilUsuario', FaUserCog)}
                 
-    
-    
-    
-    
-    
-    
 
             </>
         )

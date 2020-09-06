@@ -79,7 +79,7 @@ export const MainNav = styled.nav`
                         align-items:center;
                         justify-content:flex-start;
                         color:#6196b6;
-                        cursor:pointer;
+                        cursor:pointer !important;
                     
 
                         a{

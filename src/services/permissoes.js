@@ -5,6 +5,9 @@ export const havePermission = (screen) => {
     let user = JSON.parse(getUserToken());
     let permission = false;
 
+    if(screen == 'PerfilUsuario')
+        permission = true;
+
     if(screen == 'ProcessoCliente')
     {
         if (user.flag == 'cliente')
