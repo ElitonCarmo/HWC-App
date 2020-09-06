@@ -53,10 +53,10 @@ class Servico extends Component {
 
     /* ===== Api ===== */
     async listAll() {
-        
-        
+
+
         //api.defaults.headers.Authorization = `Bearer ${token}`;
-       
+
 
         const result = await api.get(apiService);
         const list = result.data || [];
@@ -71,7 +71,7 @@ class Servico extends Component {
 
         this.setState({ page });
         this.clearObject();
-       
+
     }
 
     handleCancelAdd = e => {
@@ -89,7 +89,7 @@ class Servico extends Component {
             let sucesso = false;
 
 
-            
+
             if (obj.id === 0)
                 await api.post(apiService, obj).then(response => {
                     sucesso = true;
@@ -123,7 +123,7 @@ class Servico extends Component {
             page: { ...this.state.page, showList: false }
         });
 
-        
+
     }
 
     handleDelete = id => {
@@ -158,7 +158,7 @@ class Servico extends Component {
     }
 
     /* =====  Render ===== */
- 
+
 
     renderForm() {
 

@@ -131,7 +131,7 @@ class Colaborador extends Component {
         let obj = this.state.list.find(x => x.id == id);
 
         if (obj.logo_path)
-            obj.imagem = `http://localhost:3333/files/${obj.logo_path}`;
+            obj.imagem = `http://104.131.13.240/files/${obj.logo_path}`;
 
         obj.showButtonAlterarSenha = true;
         obj.alterarSenha = false;
@@ -189,9 +189,9 @@ class Colaborador extends Component {
     }
 
     async removeImg(obj){
-        
+
         let sucesso = false;
-        
+
         await api.put(`${apiService}/putRemoveImagemColaborador/${obj.id}`, JSON.stringify(obj), {
             headers: { 'Content-Type': 'multipart/form-data' }
         }).then(response => {
@@ -207,7 +207,7 @@ class Colaborador extends Component {
         else
             toast.error('Não foi possivel remover essa Imagem');
     }
-    
+
     /* ===== Image ===== */
     changeImage = e => {
         if (e.target.files && e.target.files[0]) {

@@ -408,13 +408,13 @@ class Processo extends Component {
         let { processoServico } = this.state.obj;
         let index = processoServico.findIndex(x => x.id == id);
         processoServico[index][tipo] = valor;
-     
+
         if(tipo == 'ativo')
         {
-           
+
             console.log('ativo');
             let resultado = await api.get(`/processoservico/getTotalServicos/${processoServico[index].id}`);
-            
+
             console.log(processoServico[index].id);
             console.log(index);
             console.log(resultado.data);

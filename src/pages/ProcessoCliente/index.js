@@ -51,7 +51,7 @@ class ProcessoCliente extends Component {
         //this.setState({ list: list });
         const user = JSON.parse(getUserToken());
         this.findAll(user.id);
-   
+
     }
 
     /* ===== Api ===== */
@@ -315,7 +315,7 @@ class ProcessoCliente extends Component {
 
     /* ===== Clean Objects ===== */
     clearObject = () => { this.setState({ obj: { id: 0, referencia: '', tipo_operacao: '', importador: '', exportador: '', mercadoria: '', criadoEm: '', atualizadoEm: '', processoServico: [] } }); }
-    
+
 
     clearObjectServicoProcesso = () => {
 

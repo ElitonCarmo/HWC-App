@@ -5,8 +5,8 @@ const Table = styled.table`
     width:100%;
     border-collapse: collapse;
     border-spacing: 0;
-  
-    
+
+
     h1{
         font-weight:500;
     }
@@ -19,7 +19,7 @@ const Table = styled.table`
 
         }
 
-        
+
     }
 
     th, tr, td{
@@ -27,12 +27,12 @@ const Table = styled.table`
         padding:10px;
         min-height:35px;
     }
-    
+
     th{
         text-align:left;
     }
 
-    
+
 `;
 
 export default Table;

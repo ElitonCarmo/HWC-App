@@ -6,5 +6,5 @@ export const Span = styled.span`
     font-weight: ${props => props.fontWeight || "none"};
     color: ${props => props.color || "#353535"};
     background: ${props => props.background || "white"};
-    
+
 `;

@@ -49,15 +49,15 @@ class PerfilUsuario extends Component {
 
         const user = JSON.parse(getUserToken());
         this.setState({obj:{...this.state.obj, id: user.id, nome: user.nome, email: user.email, tipo: user.flag }});
-        
+
         if(user.flag == 'cliente')
             this.verificaEnviarEmailOp(user.id);
-    
+
     }
 
     async verificaEnviarEmailOp(id){
         //envio_email
-        
+
         const result = await api.get(`/cliente/getClientePorCodigo/${id}`);
         if(result != null)
         {
@@ -66,39 +66,39 @@ class PerfilUsuario extends Component {
     }
 
     /* ===== Api ===== */
-  
+
 
     /* ===== Events =====  */
-    
+
 
     handleSave = async () => {
 
         if (this.validations()) {
             let { obj } = this.state;
-            
+
             let sucesso = false;
-    
-            let urlService = obj.tipo == 'cliente' ? '/cliente/alterarConfiguracoes' : '/colaborador/alterarConfiguracoes' 
-            
+
+            let urlService = obj.tipo == 'cliente' ? '/cliente/alterarConfiguracoes' : '/colaborador/alterarConfiguracoes'
+
                 await api.put(urlService, obj).then(response => {
                     sucesso = true;
                 }).catch(error => {
                     sucesso = false;
                 });
 
-                
+
             if (sucesso) {
-             
+
                 this.setState({ obj:{...obj, senha:'', confirmarSenha:'', alterarSenha:false} })
                 toast.success('Usuario salvo com Sucesso');
             }
             else
                 toast.error('Não foi possivel alterar o Usuário');
-               
+
         }
     }
 
-   
+
 
     /* ===== Clean Objects ===== */
     clearObject = () => {
@@ -134,7 +134,7 @@ class PerfilUsuario extends Component {
     }
 
     /* =====  Render ===== */
- 
+
 
     renderForm() {
 
@@ -168,7 +168,7 @@ class PerfilUsuario extends Component {
                 </Row>
                     ) : null
                 }
-                
+
 
                 <Row>
                 {
@@ -201,14 +201,14 @@ class PerfilUsuario extends Component {
                 <Row>
                     <Column grow="1" alignItems="flex-end">
                         <Row>
-                        {    
-                                
+                        {
+
                                     (!obj.alterarSenha) ?
                                         (
                                             <ButtonPrimary class="edit" width="150px" onClick={() => { this.setState({ obj: { ...obj, alterarSenha: true } }) }}>Alterar Senha</ButtonPrimary>
                                         ) : <ButtonPrimary class="edit" width="150px" onClick={() => { this.setState({ obj: { ...obj, alterarSenha: false } }) }}>Cancelar Alterar Senha</ButtonPrimary>
-                                   
-                            
+
+
                             }
                             <ButtonSuccess class="edit" width="150px" onClick={this.handleSave}>Salvar</ButtonSuccess>
                         </Row>

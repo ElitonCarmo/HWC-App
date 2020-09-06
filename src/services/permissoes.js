@@ -12,7 +12,7 @@ export const havePermission = (screen) => {
     {
         if (user.flag == 'cliente')
             permission = true;
-    }    
+    }
     else {
         if (user.flag == 'colaborador') {
             permission = true;

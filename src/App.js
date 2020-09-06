@@ -32,7 +32,7 @@ class App extends Component {
 
 /*
 <BrowserRouter>
-       
+
         <Header showNavLeft={this.state.showNavLeft} onClickBars={(value) => this.setState({ showNavLeft: value })} />
         <Container>
           <NavLeft showNavLeft={this.state.showNavLeft} />

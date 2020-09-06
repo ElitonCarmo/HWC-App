@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const MainHeader = styled.header`
- 
+
   background:#2f333e;
   color:white;
   height:60px;
@@ -16,7 +16,7 @@ export const MainHeader = styled.header`
     height:100%;
 
     .title{
-      
+
       padding:5px;
       padding-left:15px;
       display:flex;
@@ -47,7 +47,7 @@ export const MainHeader = styled.header`
       ul{
 
           display:flex;
-          align-items:center;        
+          align-items:center;
           height:100%;
 
         li{
@@ -58,12 +58,12 @@ export const MainHeader = styled.header`
           align-items:center;
           cursor:pointer;
           font-size:17px;
-          
+
           a{
             text-decoration:none;
             color:white;
           }
-          
+
           /*
           &:hover{
             background:#e0e0e0;
@@ -90,7 +90,7 @@ export const MainHeader = styled.header`
         text-decoration:none;
         color:white;
       }
-     
+
     .options{
         /* */
         display:none;
@@ -110,9 +110,9 @@ export const MainHeader = styled.header`
         }
       }
 
-     
 
-    
+
+
     }
   }
 

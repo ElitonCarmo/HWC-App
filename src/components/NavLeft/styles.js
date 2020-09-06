@@ -5,7 +5,7 @@ export const Li = styled.li`
 `
 
 export const MainNav = styled.nav`
- 
+
     .content{
         display:flex;
         flex-direction:column;
@@ -13,17 +13,17 @@ export const MainNav = styled.nav`
 
         width:230px;
         background:white;
-       
+
         min-height: calc(100vh - 60px);
         height:100%;
-        
-        
+
+
         box-shadow: 0 2px 2px rgba(0, 0, 0, 0.25);
         position:relative;
-        
+
         .top{
             .user{
-                
+
                 padding:10px;
                 height: 70px;
                 margin-top:20px;
@@ -39,7 +39,7 @@ export const MainNav = styled.nav`
                 }
 
                 .infoUser{
-                    display:flex;                    
+                    display:flex;
                     justify-content:flex-start;
                     align-items:flex-start;
                     flex-direction:column;
@@ -61,7 +61,7 @@ export const MainNav = styled.nav`
                 margin-bottom:10px;
             }
 
-            nav{           
+            nav{
                 ul{
 
                     .active{
@@ -80,29 +80,29 @@ export const MainNav = styled.nav`
                         justify-content:flex-start;
                         color:#6196b6;
                         cursor:pointer !important;
-                    
+
 
                         a{
                             text-decoration:none;
-                            font-weight:300;                        
-                            margin-left:8px;     
-                            width:100%;       
-                            
-                            height:40px;  
+                            font-weight:300;
+                            margin-left:8px;
+                            width:100%;
+
+                            height:40px;
                             display:flex;
                             align-items:center;
-                            justify-content:flex-start;   
+                            justify-content:flex-start;
 
                             svg{
                                 margin-right:15px;
-                            }          
+                            }
                         }
 
-                       
+
 
                         &:hover{
                             background:#7fb0cddb;
-                            color:white;                            
+                            color:white;
                             a, svg{color:white !important;}
                         }
                     }
@@ -115,20 +115,20 @@ export const MainNav = styled.nav`
             flex-direction:column;
             align-items:center;
             padding-bottom:10px;
-           
+
 
             img{
                 width:55%;
             }
-            
+
         }
     }
 
 
-    
+
     @media(max-width: 800px) {
         .content{
-           
+
             width:110px;
             .user{
                 flex-direction:column;
@@ -160,14 +160,14 @@ export const MainNav = styled.nav`
                             display:flex;
                             flex-direction:column;
                             align-items:center;
-                            justify-content:center !important; 
+                            justify-content:center !important;
                             height:60px !important;
-                            margin-left:0 !important;     
-                            svg{                     
-                                margin:0 !important;                            
+                            margin-left:0 !important;
+                            svg{
+                                margin:0 !important;
                             }
                         }
-                      
+
 
                     }
                 }
@@ -178,7 +178,7 @@ export const MainNav = styled.nav`
             }
         }
     }
- 
+
 
 `;
 

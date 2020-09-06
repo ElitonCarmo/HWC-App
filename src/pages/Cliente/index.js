@@ -56,7 +56,7 @@ class Cliente extends Component {
 
         this.listAll();
 
-        
+
     }
 
     /* ===== Api ===== */
@@ -66,7 +66,7 @@ class Cliente extends Component {
         //api.defaults.headers.Authorization = `Bearer ${token}`;
         const result = await api.get(apiService);
 
-        /*        
+        /*
         api.get(apiService, {
         headers: {
             'Authorization': `token ${token}`
@@ -155,7 +155,7 @@ class Cliente extends Component {
         let obj = this.state.list.find(x => x.id == id);
 
         if (obj.logo_path) {
-            obj.imagem = `http://localhost:3333/files/${obj.logo_path}`;
+            obj.imagem = `http://104.131.13.240/files/${obj.logo_path}`;
         }
 
         obj.showButtonAlterarSenha = true;
@@ -206,7 +206,7 @@ class Cliente extends Component {
         if (errorDescriptions == '')
             return true;
         else {
-            toast.enableHtml = 
+            toast.enableHtml =
             toast.error(errorDescriptions,{enableHtml: true});
             return false;
         }
@@ -227,15 +227,15 @@ class Cliente extends Component {
     }
 
     getImage(url) {
-        this.setState({ obj: { ...this.state.obj, imagem: `http://localhost:3333/files/${url}` } });
+        this.setState({ obj: { ...this.state.obj, imagem: `http://104.131.13.240/files/${url}` } });
     }
 
 
-    
+
     async removeImg(obj){
-        
+
         let sucesso = false;
-        
+
         await api.put(`${apiService}/putRemoveImagemCliente/${obj.id}`, JSON.stringify(obj), {
             headers: { 'Content-Type': 'multipart/form-data' }
         }).then(response => {

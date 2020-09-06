@@ -50,7 +50,7 @@ class Inicio extends Component {
         let totalImportadores = 0, totalExportadores = 0;
 
         list.forEach(element => {
-          
+
             switch (element.tipo) {
                 case "Exportador": ++totalExportadores; break;
                 case "Importador": ++totalImportadores; break;
@@ -63,11 +63,11 @@ class Inicio extends Component {
 
     render() {
 
-        const { 
-            processos, 
-            status, 
-            totalImportadores, 
-            totalExportadores,    
+        const {
+            processos,
+            status,
+            totalImportadores,
+            totalExportadores,
             processosEmAndamento,
             processosFinalizados,
             statusLançados,
@@ -142,7 +142,7 @@ class Inicio extends Component {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+
                                         {
                                             status.map(l => (
                                                 <tr key={l.id}>

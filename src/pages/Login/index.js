@@ -27,7 +27,7 @@ class Login extends Component {
         await api.post(apiService, user).then(response => {
 
             api.defaults.headers.Authorization = `Bearer ${response.data.token}`;
-            login(response.data.token, JSON.stringify(response.data.usuario));      
+            login(response.data.token, JSON.stringify(response.data.usuario));
             this.setState({ redirect: true, linkRedirect: (response.data.usuario.flag == 'colaborador' ? '/inicio' : '/processocliente') });
 
         }).catch(error => {

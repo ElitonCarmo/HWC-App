@@ -19,7 +19,7 @@ export const Form = styled.form`
     input:hover {
         border-color:#343434;
     }
-    
+
 `;
 
 export const List = styled.ul`
@@ -32,7 +32,7 @@ export const List = styled.ul`
        flex-direction:row;
        justify-content:space-between;
        align-items:center;
-   
+
         & + li {
             border-top: 1px solid #eee;
         }
@@ -83,7 +83,7 @@ export const SubmitButton = styled.button.attrs(props => ({
         margin-right:0px !important;
     }
 
-  
+
 `;
 
 

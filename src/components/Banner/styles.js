@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 
 export const MainBanner = styled.div`
- 
+
     min-height: 50px;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    
+
     flex-wrap:wrap;
     color:black;
     background:white;
@@ -21,7 +21,7 @@ export const MainBanner = styled.div`
     }
 
     @media(max-width: 800px) {
-                
+
         flex-direction:column;
         justify-content:flex-end;
         align-items:flex-start;

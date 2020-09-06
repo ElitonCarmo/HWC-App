@@ -4,12 +4,12 @@ export const TOKEN_KEY = "@hwc-Token";
 export const TOKEN_USER_KEY = "@hwc-user-Token";
 
 export const isAuthenticated = (screen) => {
-    
+
     let authenticated = false;
 
-    if (localStorage.getItem(TOKEN_KEY) !== null) 
+    if (localStorage.getItem(TOKEN_KEY) !== null)
         authenticated = havePermission(screen)
-    
+
     return authenticated;
 }
 

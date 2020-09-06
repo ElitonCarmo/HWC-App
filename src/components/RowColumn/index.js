@@ -6,7 +6,7 @@ export const Row = styled.div`
     flex-wrap:wrap;
     align-items:${props=> props.alignItems || "center"};
     justify-content:${props=> props.justifyContent || "flex-start"};
-  
+
     padding:${props=> props.padding || "0"};
     border:${props=> props.border || "none"};
     border-color: ${props=> props.borderColor || "none"};
@@ -21,7 +21,7 @@ export const Column = styled.div`
     flex-grow:${props => props.grow};
     flex-direction:column;
     align-items:${props=> props.alignItems || "none"};
-   
+
     padding:${props=> props.padding || "10px"};
     border:${props=> props.border || "none"};
     background:${props=> props.background || "white"};

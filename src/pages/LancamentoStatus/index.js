@@ -81,7 +81,7 @@ class LancamentoStatus extends Component {
     }
 
     handleSave = async () => {
-       
+
         this.setState({loadingButton:true});
         if (this.validations()) {
             let { status } = this.state;
@@ -111,7 +111,7 @@ class LancamentoStatus extends Component {
             else
                 toast.error('Não foi possivel salvar o Serviço');
 
-                
+
         }
         this.setState({loadingButton:false});
     }
@@ -194,15 +194,15 @@ class LancamentoStatus extends Component {
                 <Row>
                     <Column >
                         <Row>
-                            
+
                             {
                                 loadingButton ?
                                 (<ButtonSuccess>Salvando Status</ButtonSuccess>):
-                                (<ButtonSuccess onClick={() => this.handleSave()}>Salvar Status</ButtonSuccess>) 
-                                
+                                (<ButtonSuccess onClick={() => this.handleSave()}>Salvar Status</ButtonSuccess>)
+
                             }
-                            
-                            
+
+
 
 
                             <ButtonDefault onClick={() => this.setState({ showList: true })}>Cancelar</ButtonDefault>

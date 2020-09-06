@@ -31,7 +31,7 @@ export const Select = styled.select`
 
    option{
       font-size:14px;
-    
+
    }
 
    &:hover{

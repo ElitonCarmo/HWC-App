@@ -12,7 +12,7 @@ class Header extends Component {
         redirect: false
     };
 
-    
+
 
     handleLogout = e => {
         logout();
@@ -33,7 +33,7 @@ class Header extends Component {
 
                         <div class="title">
                             <h1>HWC </h1> <span>omex</span>
-                         
+
                         </div>
 
                         <div class="side">
