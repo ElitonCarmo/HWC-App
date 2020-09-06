@@ -12,8 +12,6 @@ class Header extends Component {
         redirect: false
     };
 
-
-
     handleLogout = e => {
         logout();
         this.setState({ redirect: true });
