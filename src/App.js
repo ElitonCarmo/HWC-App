@@ -4,7 +4,7 @@ import GlobalStyle from './styles/global';
 
 import { BrowserRouter } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-//import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 class App extends Component {
 
@@ -20,11 +20,11 @@ class App extends Component {
 
     return (
 
-      <BrowserRouter>
+      <MemoryRouter>
         <Routes />
         <GlobalStyle />
         <ToastContainer autoClose={2500} />
-      </BrowserRouter>
+      </MemoryRouter>
 
     );
   }

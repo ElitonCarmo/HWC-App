@@ -10,6 +10,7 @@ import LancamentoStatus from '../LancamentoStatus';
 import api from '../../services/api';
 import { toast } from 'react-toastify';
 import handleSearch from '../../services/search';
+import { getUserToken } from '../../services/auth';
 
 const apiService = '/processo';
 
@@ -48,19 +49,21 @@ class ProcessoCliente extends Component {
 
     componentDidMount() {
         //this.setState({ list: list });
-        this.findAll();
+        const user = JSON.parse(getUserToken());
+        this.findAll(user.id);
+   
     }
 
     /* ===== Api ===== */
 
-    async listAll() {
-        const result = await api.get(apiService);
+    async listAll(idCliente) {
+        const result = await api.get(`${apiService}/cliente/getProcessosPorClienteId/${idCliente}`);
         const list = result.data || [];
         this.setState({ list, listaFiltrada: list });
     }
 
-    findAll() {
-        this.listAll();
+    findAll(idCliente) {
+        this.listAll(idCliente);
         this.findClientes();
         this.findServicos();
         this.findEmpresaEstrangeira();
@@ -311,9 +314,8 @@ class ProcessoCliente extends Component {
     }
 
     /* ===== Clean Objects ===== */
-    clearObject = () => {
-        //this.setState({ obj: {  } });
-    }
+    clearObject = () => { this.setState({ obj: { id: 0, referencia: '', tipo_operacao: '', importador: '', exportador: '', mercadoria: '', criadoEm: '', atualizadoEm: '', processoServico: [] } }); }
+    
 
     clearObjectServicoProcesso = () => {
 
