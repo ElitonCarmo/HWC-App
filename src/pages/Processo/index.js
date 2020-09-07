@@ -411,14 +411,8 @@ class Processo extends Component {
 
         if(tipo == 'ativo')
         {
-
-            console.log('ativo');
             let resultado = await api.get(`/processoservico/getTotalServicos/${processoServico[index].id}`);
-
-            console.log(processoServico[index].id);
-            console.log(index);
-            console.log(resultado.data);
-            processoServico[index].numero_registro = resultado.data.total;
+            processoServico[index].numero_registro = resultado.data;
         }
 
         this.setState({

@@ -1,3 +1,4 @@
+/* eslint-plugin-disable */
 import React, { Component } from 'react';
 import { Form, SubmitButton, List } from './styles';
 import { ScreenLogin, LogoImagem } from '../../components/ScreenLogin';
@@ -73,12 +74,20 @@ class Login extends Component {
                                 (e) => { this.setState({ senha: e.target.value }) }}
                         />
 
-                        <SubmitButton loading={loading} onClick={this.btnEntrar} >
-
-
-                            Entrar
-
-                </SubmitButton>
+                        {
+                            !loading ?
+                            (
+                                <SubmitButton onClick={this.btnEntrar} >
+                                    Entrar
+                                </SubmitButton>
+                            ):
+                            (
+                                <SubmitButton onClick={(e)=>{e.preventDefault()}}>
+                                    Aguarde
+                                </SubmitButton>
+                            )
+                        }
+                        
                     </Form>
 
                     <List >

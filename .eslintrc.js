@@ -1,7 +1,9 @@
 module.exports = {
   env: {
     browser: true,
-    es2020: true,
+    es2020: true, 
+    "plugins": ["disable"],
+    "processor": "disable/disable"
   },
   extends: [
     'plugin:react/recommended',

@@ -1,3 +1,4 @@
+/* eslint-plugin-disable */
 import React, { Component } from 'react';
 import Routes from './routes';
 import GlobalStyle from './styles/global';
@@ -20,11 +21,11 @@ class App extends Component {
 
     return (
 
-      <BrowserRouter>
+      <MemoryRouter>
         <Routes />
         <GlobalStyle />
         <ToastContainer autoClose={2500} />
-      </BrowserRouter>
+      </MemoryRouter>
 
     );
   }
