@@ -5,7 +5,7 @@ const token = getToken();
 
 
 let api = axios.create({
-  baseURL: 'http://104.131.13.240',
+  baseURL: 'http://104.131.13.240:80',
 });
 
 /*
