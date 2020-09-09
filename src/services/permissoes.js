@@ -21,7 +21,5 @@ export const havePermission = (screen) => {
                 permission = false;
         }
     }
-
-    console.log(permission);
     return permission;
 }
