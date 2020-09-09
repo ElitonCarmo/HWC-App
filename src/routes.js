@@ -18,6 +18,7 @@ import NavLeft from './components/NavLeft';
 import { Screen } from './components/Screen';
 
 //alert(isAuthenticated())
+//teste
 
 /*
 const PrivateRoute = ({ component: Component, ...rest }) => (
