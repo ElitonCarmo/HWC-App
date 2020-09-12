@@ -309,7 +309,18 @@ class Processo extends Component {
 
     /* ===== Clean Objects ===== */
     clearObject = () => {
-        //this.setState({ obj: {  } });
+        this.setState({obj: {
+            id: 0,
+            referencia: '',
+            tipo_operacao: '',
+            importador: '',
+            exportador: '',
+            mercadoria: '',
+            criadoEm: '',
+            atualizadoEm: '',
+
+            processoServico: []
+        } });
     }
 
     clearObjectServicoProcesso = () => {
