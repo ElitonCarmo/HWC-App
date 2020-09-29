@@ -82,6 +82,9 @@ class Cliente extends Component {
 
         const list = result.data || [];
         this.setState({ list, listaFiltrada: list });
+        
+        console.log('Lista de Clientes');
+        console.log(list);
     }
 
     /* ===== Events =====  */
@@ -436,8 +439,8 @@ class Cliente extends Component {
                                 <th>Tipo</th>
                                 <th>CPF</th>
                                 <th>E-mail</th>
-
                                 <th>Ativo</th>
+                                <th title="Celular está habilitado para receber notificações ?">Celular Habilitado ?</th>
                                 <th>Ação</th>
                             </tr>
                         </thead>
@@ -453,6 +456,9 @@ class Cliente extends Component {
                                         <td>{l.email}</td>
 
                                         <td>{l.ativo ? 'Sim' : 'Não'}</td>
+
+                                        <td>{l.id_celular ? 'Sim' : 'Não'}</td>
+
                                         <td>
                                             <Row alignItems="flex-end">
                                                 <ButtonPrimary class="edit" width="70px" onClick={() => { this.handleEdit(l.id) }}>Editar</ButtonPrimary>
