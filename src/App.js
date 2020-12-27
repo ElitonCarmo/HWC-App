@@ -21,11 +21,11 @@ class App extends Component {
 
     return (
 
-      <MemoryRouter>
+      <BrowserRouter>
         <Routes />
         <GlobalStyle />
         <ToastContainer autoClose={2500} />
-      </MemoryRouter>
+      </BrowserRouter>
 
     );
   }

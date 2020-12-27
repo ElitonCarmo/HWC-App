@@ -130,8 +130,11 @@ class Colaborador extends Component {
     handleEdit = id => {
         let obj = this.state.list.find(x => x.id == id);
 
-        if (obj.logo_path)
-            obj.imagem = `http://104.131.13.240/files/${obj.logo_path}`;
+        if (obj.logo_path){
+         
+
+            obj.imagem = `http://104.131.13.240:3333/files/${obj.logo_path}`;
+        }
 
         obj.showButtonAlterarSenha = true;
         obj.alterarSenha = false;

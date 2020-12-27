@@ -176,9 +176,9 @@ class EmpresaEstrangeira extends Component {
 
                     <Column grow="1">
                         <Span>NIF</Span>
-                        <Text placeholder="Informe o CPF ou CNPJ"
+                        <Text placeholder="Informe o NIF"
                             value={obj.nif}
-                            type="number"
+                            type="text"
                             maxLength={50}
                             onChange={(e) => { this.setState({ obj: { ...obj, nif: e.target.value } }) }}
                         />
@@ -230,7 +230,7 @@ class EmpresaEstrangeira extends Component {
 
                     <Column grow="1">
                         <Span>Pesquisar</Span>
-                        <Text placeholder="Pesquise pelo nome, cpf, cnpj ou e-mail"
+                        <Text placeholder="Pesquise pelo nome ou NIF"
                             onChange={(e) => this.setState({ listaFiltrada: handleSearch(this.state.list, e.target.value) })}
                         />
 

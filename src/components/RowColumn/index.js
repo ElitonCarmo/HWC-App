@@ -7,7 +7,7 @@ export const Row = styled.div`
     align-items:${props=> props.alignItems || "center"};
     justify-content:${props=> props.justifyContent || "flex-start"};
 
-    padding:${props=> props.padding || "0"};
+    padding:${props=> props.padding || "0"} !important;
     border:${props=> props.border || "none"};
     border-color: ${props=> props.borderColor || "none"};
     color:${props=> props.color || "black"};

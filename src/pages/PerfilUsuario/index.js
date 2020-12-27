@@ -51,14 +51,14 @@ class PerfilUsuario extends Component {
         this.setState({obj:{...this.state.obj, id: user.id, nome: user.nome, email: user.email, tipo: user.flag }});
 
         if(user.flag == 'cliente')
-            this.verificaEnviarEmailOp(user.id);
+            this.verificaEnviarEmailOp(user.email);
 
     }
 
-    async verificaEnviarEmailOp(id){
+    async verificaEnviarEmailOp(email){
         //envio_email
 
-        const result = await api.get(`/cliente/getClientePorCodigo/${id}`);
+        const result = await api.get(`/cliente/getClientePorCodigo/${email}`);
         if(result != null)
         {
             this.setState({obj:{...this.state.obj, envio_email: result.data.envio_email}});
@@ -74,6 +74,9 @@ class PerfilUsuario extends Component {
     handleSave = async () => {
 
         if (this.validations()) {
+
+            debugger;
+
             let { obj } = this.state;
 
             let sucesso = false;
