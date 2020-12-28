@@ -13,11 +13,11 @@ class Inicio extends Component {
         totalImportadores: 0,
         totalExportadores: 0,
 
-        processosEmAndamento:0,
-        processosFinalizados:'-',
+        processosEmAndamento: 0,
+        processosFinalizados: '-',
 
-        statusLançados:0,
-        statusVisualizados:'-'
+        statusLançados: 0,
+        statusVisualizados: '-'
     }
 
     componentDidMount() {
@@ -34,7 +34,11 @@ class Inicio extends Component {
     async listProcessos() {
         const result = await api.get('/processo');
         const list = result.data || [];
-        this.setState({ processos: list, processosEmAndamento: list.length });
+
+        const listProcessosFinalizados = list.filter(x => x.processofinalizado == 1);
+        const listProcessosAndamento = list.filter(x => x.processofinalizado == 0);
+
+        this.setState({ processos: list, processosEmAndamento: listProcessosAndamento.length, processosFinalizados: listProcessosFinalizados.length });
     }
 
     async listStatus() {

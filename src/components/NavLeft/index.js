@@ -21,14 +21,14 @@ class NavLeft extends Component {
     async configUser(){
         const user = JSON.parse(getUserToken());
 
-        if (user.logo_path != null && user.logo_path != "")
-            user.logo_path = `http://104.131.13.240/files/${user.logo_path}`;
-        else{
-
-
-            user.logo_path = 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png';
-
+        if (user.logo_path !== null && user.logo_path !== ""){
+            user.logo_path = `http://104.131.13.240:3333/files/${user.logo_path}`;
         }
+        else
+        {
+            user.logo_path = 'https://cdn.icon-icons.com/icons2/1378/PNG/512/avatardefault_92824.png';
+        }
+     
 
         if(user.flag == 'colaborador')
             user.descricaoSubTitulo = user.tipo;

@@ -27,7 +27,7 @@ class LancamentoStatus extends Component {
             updated_at: '',
         },
         list: [],
-        loadingButton:false
+        loadingButton: false
     }
 
     componentDidMount() {
@@ -71,6 +71,20 @@ class LancamentoStatus extends Component {
         if (status.processo_servico_id === '' || status.processo_servico_id == "-1")
             errorDescriptions = "Selecione para qual serviço esse status vai estar vinculado";
 
+        let descricaoJaExistente = false;
+
+        let listStatus = this.state.list;
+
+        if (listStatus != null)
+            listStatus.forEach(l => {
+                if (l.descricao_status == status.descricao_status)
+                    descricaoJaExistente = true;
+            });
+
+        if (descricaoJaExistente)
+            errorDescriptions = 'Já existe um status criado com a mesma descrição';
+        //descricao_status
+
         if (errorDescriptions === '')
             return true;
         else {
@@ -82,7 +96,7 @@ class LancamentoStatus extends Component {
 
     handleSave = async () => {
 
-        this.setState({loadingButton:true});
+        this.setState({ loadingButton: true });
         if (this.validations()) {
             let { status } = this.state;
 
@@ -103,17 +117,19 @@ class LancamentoStatus extends Component {
                 });
 
             if (sucesso) {
-                this.clearObject();
-                this.listAll();
-                this.setState({ showList: true });
                 toast.success('Status salvo com Sucesso');
             }
             else
-                toast.error('Não foi possivel salvar o Serviço');
+                toast.error('Não foi possivel salvar o Status');
+
+            this.clearObject();
+            this.listAll();
+            this.setState({ showList: true });
+            
 
 
         }
-        this.setState({loadingButton:false});
+        this.setState({ loadingButton: false });
     }
 
 
@@ -197,8 +213,8 @@ class LancamentoStatus extends Component {
 
                             {
                                 loadingButton ?
-                                (<ButtonSuccess>Salvando Status</ButtonSuccess>):
-                                (<ButtonSuccess onClick={() => this.handleSave()}>Salvar Status</ButtonSuccess>)
+                                    (<ButtonSuccess>Salvando Status</ButtonSuccess>) :
+                                    (<ButtonSuccess onClick={() => this.handleSave()}>Salvar Status</ButtonSuccess>)
 
                             }
 

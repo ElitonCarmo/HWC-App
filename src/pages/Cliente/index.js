@@ -47,6 +47,20 @@ class Cliente extends Component {
 
         },
 
+        adicionarAcesso: false,
+        objUsuarioAcesso: {
+            id: 0,
+            nome: '',
+            cliente_id: 0,
+            email: '',
+            senha: '',
+            confirmarSenha: '',
+            ativo: true,
+            alterarSenha: true,
+            showButtonAlterarSenha: false
+        },
+
+        listAcesso: [],
         list: [],
         listaFiltrada: []
     }
@@ -82,7 +96,7 @@ class Cliente extends Component {
 
         const list = result.data || [];
         this.setState({ list, listaFiltrada: list });
-        
+
         console.log('Lista de Clientes');
         console.log(list);
     }
@@ -154,20 +168,24 @@ class Cliente extends Component {
         }
     }
 
-    handleEdit = id => {
+    handleEdit = async id => {
         let obj = this.state.list.find(x => x.id == id);
 
         if (obj.logo_path) {
-            obj.imagem = `http://104.131.13.240/files/${obj.logo_path}`;
+            obj.imagem = `http://104.131.13.240:3333/files/${obj.logo_path}`;
         }
 
         obj.showButtonAlterarSenha = true;
         obj.alterarSenha = false;
 
-        this.setState({
+
+        await this.setState({
             obj: obj,
             page: { ...this.state.page, showList: false }
         });
+
+        this.handleBuscarAcesso();
+
     }
 
     handleDelete = id => {
@@ -182,6 +200,23 @@ class Cliente extends Component {
         this.setState({ obj: { id: 0, nome: '', cpf_cnpj: '', email: '', senha: '', confirmarSenha: '', envio_email: true, tipo: '', ativo: true, criadoEm: '', atualizadoEm: '', alterarSenha: true, showButtonAlterarSenha: false } });
     }
 
+    clearObjectAcess = () => {
+        this.setState({
+            objUsuarioAcesso: {
+                id: 0,
+                nome: '',
+                cliente_id: 0,
+                email: '',
+                senha: '',
+                confirmarSenha: '',
+                ativo: true,
+                alterarSenha: true,
+                showButtonAlterarSenha: false
+            }
+        });
+
+    }
+
     /* ===== Validations ===== */
     validations = () => {
 
@@ -194,9 +229,11 @@ class Cliente extends Component {
         if (obj.cpf_cnpj == '')
             errorDescriptions += "Preencha o campo CPF ou CNPJ, ";
 
+
+        /*
         if (obj.email == '')
             errorDescriptions += "Preencha o campo Email, ";
-
+    
         if (obj.alterarSenha) {
             if (obj.senha == '')
                 errorDescriptions += "Preencha o campo Senha, ";
@@ -205,12 +242,13 @@ class Cliente extends Component {
                     errorDescriptions += "As senhas informadas não conferem, ";
             }
         }
+        */
 
         if (errorDescriptions == '')
             return true;
         else {
             toast.enableHtml =
-            toast.error(errorDescriptions,{enableHtml: true});
+                toast.error(errorDescriptions, { enableHtml: true });
             return false;
         }
 
@@ -235,7 +273,7 @@ class Cliente extends Component {
 
 
 
-    async removeImg(obj){
+    async removeImg(obj) {
 
         let sucesso = false;
 
@@ -256,7 +294,231 @@ class Cliente extends Component {
     }
     /* =====  Render ===== */
 
+    handleVisibilityAcesso = (op) => {
+        this.setState({ adicionarAcesso: op });
+    }
 
+
+    handleBuscarAcesso = async e => {
+
+        const { obj } = this.state;
+        const result = await api.get(`/clienteContato/${obj.id}`);
+
+        const list = result.data || [];
+        this.setState({ listAcesso: list });
+
+    }
+
+    handleEditAcesso = async (userAcess) => {
+        this.handleVisibilityAcesso(true);
+
+        console.log('Bruno');
+        console.log(userAcess);
+
+        await this.setState({ objUsuarioAcesso: { ...userAcess, alterarSenha: false, showButtonAlterarSenha: true } });
+
+        console.log(this.objUsuarioAcesso);
+    }
+
+    handleSaveAcesso = async e => {
+
+        let { objUsuarioAcesso, obj } = this.state;
+
+        objUsuarioAcesso.cliente_id = obj.id;
+        let sucesso = false;
+
+debugger;
+
+        if (objUsuarioAcesso.id == 0) {
+            await api.post('/clienteContato', objUsuarioAcesso).then(response => {
+                sucesso = true;
+            }).catch(error => {
+                sucesso = false;
+            });
+        }
+        else {
+            await api.put('/clienteContato', objUsuarioAcesso).then(response => {
+                sucesso = true;
+            }).catch(error => {
+                sucesso = false;
+            });
+        }
+
+        if (sucesso) {
+            this.clearObjectAcess();
+            this.handleBuscarAcesso();
+            this.handleVisibilityAcesso(false);
+            toast.success('Contato salvo com Sucesso');
+        }
+        else
+            toast.error('Não foi possivel salvar esse Acesso');
+
+    }
+
+    renderAcessoSistema() {
+
+        let { adicionarAcesso, objUsuarioAcesso, listAcesso } = this.state;
+
+
+        return (
+            <>
+                <Row>
+                    <Column grow="1">
+                        <Row justifyContent="space-between" padding="2">
+                            <Span fontSize="22px">Acesso</Span>
+
+                            {
+                                adicionarAcesso != true ?
+                                    (<ButtonSuccess class="edit" width="150px" onClick={() => this.handleVisibilityAcesso(true)} title="Clique aqui para adicionar um novo usuário para Acessar o Sistema">Adicionar Usuário</ButtonSuccess>) : ('')
+
+                            }
+
+                        </Row>
+                    </Column>
+                </Row>
+
+                {
+                    adicionarAcesso == true ?
+                        (
+                            <>
+                                <Row>
+                                    <Column grow="2">
+                                        <Span>Nome</Span>
+                                        <Text placeholder="Informe o Nome"
+                                            value={objUsuarioAcesso.nome}
+                                            onChange={(e) => { this.setState({ objUsuarioAcesso: { ...objUsuarioAcesso, nome: e.target.value } }); }}
+                                        />
+                                    </Column>
+
+                                    <Column grow="2">
+                                        <Span>Email</Span>
+                                        <Text placeholder="Informe o E-mail"
+                                            value={objUsuarioAcesso.email}
+                                            onChange={(e) => { this.setState({ objUsuarioAcesso: { ...objUsuarioAcesso, email: e.target.value } }); }}
+
+
+                                        />
+                                    </Column>
+
+                                    {
+                                        (objUsuarioAcesso.alterarSenha || objUsuarioAcesso.id == 0) ?
+                                            (
+                                                <>
+                                                    <Column grow="2">
+                                                        <Span>Senha</Span>
+
+                                                        <Text placeholder="Informe a Senha"
+                                                            type="password"
+                                                            onChange={(e) => { this.setState({ objUsuarioAcesso: { ...objUsuarioAcesso, senha: e.target.value } }); }}
+                                                        />
+                                                    </Column>
+
+                                                    <Column grow="2">
+                                                        <Span>Confirmar Senha</Span>
+
+                                                        <Text placeholder="Informe a Senha"
+                                                            type="password"
+                                                            onChange={(e) => { this.setState({ objUsuarioAcesso: { ...objUsuarioAcesso, confirmarSenha: e.target.value } }); }}
+                                                        />
+                                                    </Column>
+                                                </>
+                                            ) : ('')
+                                    }
+
+                                    <Column >
+                                        <Row>
+                                            <CheckBox type="checkbox"
+                                                checked={objUsuarioAcesso.ativo}
+                                                onChange={(e) => { this.setState({ objUsuarioAcesso: { ...objUsuarioAcesso, ativo: e.target.checked } }) }}
+                                            />
+
+                                            <Span>Ativo</Span>
+
+                                        </Row>
+                                    </Column>
+
+                                </Row>
+
+                                <Row>
+                                    <Column grow="1" alignItems="flex-end">
+                                        <Row>
+
+                                            {
+                                                (objUsuarioAcesso.id != 0) ?
+                                                    (objUsuarioAcesso.showButtonAlterarSenha) ?
+                                                        (
+                                                            <ButtonPrimary class="edit" width="150px" onClick={() => { this.setState({ objUsuarioAcesso: { ...objUsuarioAcesso, showButtonAlterarSenha: false, alterarSenha: true } }) }}>Alterar Senha</ButtonPrimary>
+                                                        ) : <ButtonPrimary class="edit" width="150px" onClick={() => { this.setState({ objUsuarioAcesso: { ...objUsuarioAcesso, showButtonAlterarSenha: true, alterarSenha: false } }) }}>Cancelar Alterar Senha</ButtonPrimary>
+                                                    : ('')
+                                            }
+
+                                            <ButtonSuccess class="edit" width="150px" onClick={this.handleSaveAcesso}>Salvar Acesso</ButtonSuccess>
+                                            <ButtonDefault class="edit" width="150px" onClick={() => this.handleVisibilityAcesso(false)}>Cancelar</ButtonDefault>
+                                        </Row>
+                                    </Column>
+                                </Row>
+                            </>
+                        ) : null
+
+                }
+
+                {
+                    adicionarAcesso != true ?
+                        (
+                            <div style={{ "overflow-x": "auto", "padding": "10px" }}>
+                                <Table>
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Nome</th>
+                                            <th>Email</th>
+                                            <th>Ativo</th>
+
+                                            <th>Ação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            (listAcesso || []).map(l => (
+                                                <tr key={l.id}>
+                                                    <td>{l.id}</td>
+                                                    <td>{l.nome}</td>
+                                                    <td>{l.email}</td>
+                                                    <td>{l.ativo ? 'Sim' : 'Não'}</td>
+                                                    {
+                                                        /*
+                                                        
+                                                        <td>{l.email}</td>
+                                                       
+                                                        <td>{l.id_celular ? 'Sim' : 'Não'}</td>
+                                                        */
+                                                    }
+
+                                                    <td>
+
+                                                        <Row alignItems="flex-end">
+                                                            <ButtonPrimary class="edit" width="70px" onClick={() => { this.handleEditAcesso(l) }}>Editar</ButtonPrimary>
+                                                        </Row>
+
+                                                    </td>
+
+                                                </tr>
+                                            ))}
+
+
+                                    </tbody>
+
+                                </Table>
+                            </div>
+                        )
+                        :
+                        ('')
+                }
+
+
+            </>
+        )
+    }
 
 
     renderForm() {
@@ -300,15 +562,17 @@ class Cliente extends Component {
                 </Row>
 
                 <Row>
-                    <Column grow="3">
+
+                    {/*<Column grow="3">
                         <Span>Email</Span>
                         <Text placeholder="Informe o E-mail"
                             value={obj.email}
                             onChange={(e) => { this.setState({ obj: { ...obj, email: e.target.value } }) }}
                         />
                     </Column>
+                    */}
 
-                    {
+                    {/*
 
                         (obj.codigo == 0 || obj.alterarSenha) ?
                             (
@@ -332,7 +596,7 @@ class Cliente extends Component {
                                     </Column>
                                 </>
                             ) : ('')
-                    }
+                            */}
 
                 </Row>
 
@@ -390,23 +654,25 @@ class Cliente extends Component {
                     <Column grow="1" alignItems="flex-end">
                         <Row>
 
-                            {
+                            {/*
                                 (obj.id != 0) ?
                                     (obj.showButtonAlterarSenha) ?
                                         (
                                             <ButtonPrimary class="edit" width="150px" onClick={() => { this.setState({ obj: { ...obj, showButtonAlterarSenha: false, alterarSenha: true } }) }}>Alterar Senha</ButtonPrimary>
                                         ) : <ButtonPrimary class="edit" width="150px" onClick={() => { this.setState({ obj: { ...obj, showButtonAlterarSenha: true, alterarSenha: false } }) }}>Cancelar Alterar Senha</ButtonPrimary>
                                     : ('')
-                            }
+                                        */}
 
                             <ButtonSuccess class="edit" width="150px" onClick={this.handleSave}>Salvar</ButtonSuccess>
                             <ButtonDefault class="edit" width="150px" onClick={this.handleCancelAdd}>Cancelar</ButtonDefault>
                         </Row>
                     </Column>
-
-
-
                 </Row>
+
+
+                {obj.codigo != 0 ? this.renderAcessoSistema() : null}
+
+
 
             </form >
         )
@@ -438,9 +704,14 @@ class Cliente extends Component {
                                 <th>Nome</th>
                                 <th>Tipo</th>
                                 <th>CPF</th>
+                                {
+                                    /*
                                 <th>E-mail</th>
                                 <th>Ativo</th>
                                 <th title="Celular está habilitado para receber notificações ?">Celular Habilitado ?</th>
+                               
+                                    */
+                                }
                                 <th>Ação</th>
                             </tr>
                         </thead>
@@ -453,11 +724,14 @@ class Cliente extends Component {
                                         <td>{l.nome}</td>
                                         <td>{l.tipo}</td>
                                         <td>{l.cpf_cnpj}</td>
-                                        <td>{l.email}</td>
-
-                                        <td>{l.ativo ? 'Sim' : 'Não'}</td>
-
-                                        <td>{l.id_celular ? 'Sim' : 'Não'}</td>
+                                        {
+                                            /*
+                                            
+                                            <td>{l.email}</td>
+                                            <td>{l.ativo ? 'Sim' : 'Não'}</td>
+                                            <td>{l.id_celular ? 'Sim' : 'Não'}</td>
+                                            */
+                                        }
 
                                         <td>
                                             <Row alignItems="flex-end">

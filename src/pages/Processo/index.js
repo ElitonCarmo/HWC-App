@@ -34,7 +34,7 @@ class Processo extends Component {
             mercadoria: '',
             criadoEm: '',
             atualizadoEm: '',
-
+            processofinalizado: 0,
             processoServico: []
         },
 
@@ -89,14 +89,17 @@ class Processo extends Component {
     // {{ base_url }}/servico/getServicosAtivos
     // {{ base_url }}/empresaexterior/getEmpresasAtivas
 
-    handleAddNew = e => {
+    handleAddNew = async e => {
+
         let { page } = this.state;
-
         page.showList = false;
-
         this.setState({ page });
-        this.clearObject();
-        this.clearObjectServicoProcesso();
+
+        await this.clearObject();
+        await this.clearObjectServicoProcesso();
+
+
+        let { obj } = this.state;
     }
 
     handleCancelAdd = e => {
@@ -108,6 +111,9 @@ class Processo extends Component {
     handleSave = async () => {
 
         if (this.validations()) {
+
+            debugger;
+
             let { obj } = this.state;
 
             let response = null;
@@ -120,6 +126,7 @@ class Processo extends Component {
 
             let resp = '';
 
+            console.log('Processo POST');
             console.log(obj);
 
             if (obj.id === 0)
@@ -160,11 +167,6 @@ class Processo extends Component {
     }
 
     async handleSaveProcessoServico(servico, idPprocesso) {
-
-        console.log('Brunow');
-        console.log(this.state);
-        console.log(servico);
-        debugger;
 
         let sucesso = false;
 
@@ -309,7 +311,8 @@ class Processo extends Component {
 
     /* ===== Clean Objects ===== */
     clearObject = () => {
-        this.setState({obj: {
+
+        let obj = {
             id: 0,
             referencia: '',
             tipo_operacao: '',
@@ -318,9 +321,15 @@ class Processo extends Component {
             mercadoria: '',
             criadoEm: '',
             atualizadoEm: '',
-
+            processofinalizado: 0,
             processoServico: []
-        } });
+        }
+
+        this.setState({
+            obj: obj
+        });
+
+
     }
 
     clearObjectServicoProcesso = () => {
@@ -378,7 +387,7 @@ class Processo extends Component {
                                 <th>Importador</th>
                                 <th>Exportador</th>
                                 <th>Mercadoria</th>
-
+                                <th>Finalizado ?</th>
                                 <th>Ação</th>
                             </tr>
                         </thead>
@@ -395,7 +404,7 @@ class Processo extends Component {
                                         <td> {l.tipo_operacao == 'Exportacao' ? l.cliente.nome : l.empresa.nome}</td>
 
                                         <td>{l.mercadoria}</td>
-
+                                        <td>{l.processofinalizado == 0 ? 'Não' : 'Sim'}</td>
                                         <td>
                                             <Row alignItems="flex-end">
                                                 <ButtonInfo class="edit" width="70px" onClick={() => { this.handleOpenStatus(l) }}>Status</ButtonInfo>
@@ -414,14 +423,13 @@ class Processo extends Component {
         );
     }
 
-     atualizaServicoProcesso = async (id, valor, tipo) => {
+    atualizaServicoProcesso = async (id, valor, tipo) => {
 
         let { processoServico } = this.state.obj;
         let index = processoServico.findIndex(x => x.id == id);
         processoServico[index][tipo] = valor;
 
-        if(tipo == 'ativo')
-        {
+        if (tipo == 'ativo') {
             let resultado = await api.get(`/processoservico/getTotalServicos/${processoServico[index].id}`);
             processoServico[index].numero_registro = resultado.data;
         }
@@ -553,6 +561,28 @@ class Processo extends Component {
                             </Select>
 
                         </Column>
+
+
+                        {obj.id != 0 ?
+                            (
+                                <Column grow="1">
+                                    <Span>Processo Finalizado ? </Span>
+
+                                    <Select value={obj.processofinalizado}
+                                        onChange={(e) => { this.setState({ obj: { ...obj, processofinalizado: e.target.value } }); }}
+                                    >
+                                        <option value="0">Não</option>
+                                        <option value="1">Sim</option>
+                                    </Select>
+
+                                </Column>
+
+                            ) :
+                            ('')
+                        }
+
+
+
                     </Row>
 
                     {this.renderImportadorExportador(obj)}
@@ -576,6 +606,8 @@ class Processo extends Component {
                     </Row>
 
                     {this.renderServicos()}
+
+
 
                     <Row>
                         <Column grow="1" alignItems="flex-end">
