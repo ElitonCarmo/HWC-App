@@ -670,7 +670,7 @@ debugger;
                 </Row>
 
 
-                {obj.codigo != 0 ? this.renderAcessoSistema() : null}
+                {obj.id != 0 ? this.renderAcessoSistema() : null}
 
 
 
